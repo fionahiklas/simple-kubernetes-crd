@@ -35,10 +35,14 @@ spec:
           spec:
             description: ElectricTreesSpec defines the desired state of ElectricTrees
             properties:
-              foo:
-                description: Foo is an example field of ElectricTrees. Edit electrictrees_types.go
-                  to remove/update
+              eyes_closed:
+                type: boolean
+              how_far_away:
+                type: integer
+              tree_name:
                 type: string
+              try:
+                type: boolean
             type: object
           status:
             description: ElectricTreesStatus defines the observed state of ElectricTrees
