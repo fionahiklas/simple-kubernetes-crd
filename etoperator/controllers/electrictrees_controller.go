@@ -47,7 +47,7 @@ type ElectricTreesReconciler struct {
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.14.1/pkg/reconcile
-func (r *ElectricTreesReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (etr *ElectricTreesReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
@@ -56,8 +56,8 @@ func (r *ElectricTreesReconciler) Reconcile(ctx context.Context, req ctrl.Reques
 }
 
 // SetupWithManager sets up the controller with the Manager.
-func (r *ElectricTreesReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (etr *ElectricTreesReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&hiklascomv1alpha1.ElectricTrees{}).
-		Complete(r)
+		Complete(etr)
 }

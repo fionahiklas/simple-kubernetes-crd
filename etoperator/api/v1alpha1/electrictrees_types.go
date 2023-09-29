@@ -21,12 +21,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
 // ElectricTreesSpec defines the desired state of ElectricTrees
 type ElectricTreesSpec struct {
-	TreeName   string `json:"tree_name,omitempty"`
+	TreeName   string `json:"tree_name"`
 	Try        bool   `json:"try,omitempty"`
 	HowFarAway int    `json:"how_far_away,omitempty"`
 	EyesClosed bool   `json:"eyes_closed,omitempty"`

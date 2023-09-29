@@ -2,7 +2,11 @@
 
 ## Overview
 
-Setup for testing Custom Resource Definition (CRD)
+Setup for testing Custom Resource Definition (CRD) and operator/controller.
+
+The operator/CRD are for an object called "ElectricTrees".  Why?  Well,
+my daughter loves the song [Together in Electric Dreams](https://en.wikipedia.org/wiki/Together_in_Electric_Dreams) but she thinks the line is 
+"Together in Electric Trees" hence the name of this operator.
 
 
 ## Quickstart

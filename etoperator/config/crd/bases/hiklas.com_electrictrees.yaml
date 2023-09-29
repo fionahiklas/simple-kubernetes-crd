@@ -43,6 +43,8 @@ spec:
                 type: string
               try:
                 type: boolean
+            required:
+            - tree_name
             type: object
           status:
             description: ElectricTreesStatus defines the observed state of ElectricTrees
