@@ -1,0 +1,33 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  creationTimestamp: null
+  name: manager-role
+rules:
+- apiGroups:
+  - hiklas.com
+  resources:
+  - electrictrees
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - hiklas.com
+  resources:
+  - electrictrees/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - hiklas.com
+  resources:
+  - electrictrees/status
+  verbs:
+  - get
+  - patch
+  - update
