@@ -1,0 +1,12 @@
+apiVersion: hiklas.com/v1alpha1
+kind: ElectricTrees
+metadata:
+  labels:
+    app.kubernetes.io/name: electrictrees
+    app.kubernetes.io/instance: electrictrees-sample
+    app.kubernetes.io/part-of: etoperator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: etoperator
+  name: electrictrees-sample
+spec:
+  # TODO(user): Add fields here

@@ -80,6 +80,15 @@ WARN[0000] the platform of this environment (darwin/arm64) is not suppported by 
 This is fixed by adding the `kustomize` prerequisite
 
 
+### Creating API
+
+Running this command
+
+```
+operator-sdk create api --version=v1alpha1 --kind=ElectricTrees
+```
+
+
 
 ## References
 

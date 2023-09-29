@@ -10,4 +10,13 @@ plugins:
   scorecard.sdk.operatorframework.io/v2: {}
 projectName: etoperator
 repo: github.com/fionahiklas/simple-kubernetes-crd/etoperator
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: hiklas.com
+  kind: ElectricTrees
+  path: github.com/fionahiklas/simple-kubernetes-crd/etoperator/api/v1alpha1
+  version: v1alpha1
 version: "3"
