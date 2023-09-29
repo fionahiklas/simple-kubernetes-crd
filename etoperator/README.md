@@ -88,6 +88,14 @@ Running this command
 operator-sdk create api --version=v1alpha1 --kind=ElectricTrees
 ```
 
+Creating the manifests
+
+```
+make manifests
+```
+
+
+
 
 
 ## References
