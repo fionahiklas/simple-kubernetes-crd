@@ -1,4 +1,9 @@
 
+# Note: This Makefile can either be run from the command line/terminal or it
+#       may be running inside a Dockerfile build.  In this second case some
+#       of the environment variables may have been passed in as Docker build
+#       arguments.
+
 # Application name
 APP_NAME=electrictrees
 
@@ -9,6 +14,10 @@ TARGETOS ?= $(shell uname -s)
 
 BUILD_PATH ?= $(CURDIR)/build
 GO_MODULE_PATH ?= $(shell head -1 go.mod | cut -d' ' -f2-)
+
+# This value may get passed in via an environment when we're building the
+# Docker image otherwise we have to copy the whole .git folder and that
+# is a bit of a waste of time
 COMMIT_HASH ?= $(shell git rev-parse --short HEAD)
 CODE_VERSION ?= $(shell cat ./VERSION)
 
@@ -75,15 +84,15 @@ build: ## Build the application using native target or from inside Docker
 	@echo "Building local '${APP_NAME}' for '${TARGETARCH}' on '${TARGETOS}'"
 	CGO_ENABLED=0 go build ${GO_LD_FLAGS} -o ${BUILD_PATH}/${APP_NAME}-${TARGETOS}-${TARGETARCH} ./cmd/${APP_NAME}
 
-run: ## Run the application that has been built locally
+run_local: build ## Run the application that has been built locally
 	@echo "Running '${APP_NAME}' version '${CODE_VERSION}' locally on '${TARGETOS}/${TARGETARCH}'"
 	( . ./scripts/local-env.sh ; ./build/${APP_NAME}-${TARGETOS}-${TARGETARCH} )
 
 build_for_local: ## Build image using local docker daemon
-	docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} -t ${APP_NAME}:${VERSION} .
+	docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${VERSION} .
 
 build_for_minikube: ## Build the image using Minikubes docker daemon
-	eval $$(minikube docker-env) ; docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} -t ${APP_NAME}:${VERSION} .
+	eval $$(minikube docker-env) ; docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${VERSION} .
 
 check_minikube_images: ## Get a list of images from the Minikube docker daemon
 	eval $$(minikube docker-env) ; docker images

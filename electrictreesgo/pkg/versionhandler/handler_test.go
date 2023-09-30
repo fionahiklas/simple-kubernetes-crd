@@ -1,6 +1,7 @@
 package versionhandler_test
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 	"net/http/httptest"
@@ -27,13 +28,13 @@ func TestNewHandler(t *testing.T) {
 
 	t.Run("create new handler", func(t *testing.T) {
 		resetTest(t)
-		handler := versionhandler.NewHandler(testLogger, "", "")
+		handler := versionhandler.NewHandler(testLogger, "", "", "")
 		require.NotNil(t, handler)
 	})
 
 	t.Run("bad request", func(t *testing.T) {
 		resetTest(t)
-		handler := versionhandler.NewHandler(testLogger, "", "")
+		handler := versionhandler.NewHandler(testLogger, "", "", "")
 		testRequest := httptest.NewRequest("POST", "/wibble", nil)
 		testResponseRecorder := httptest.NewRecorder()
 
@@ -43,23 +44,37 @@ func TestNewHandler(t *testing.T) {
 
 	t.Run("get request", func(t *testing.T) {
 		const (
+			testAppName = "Marvin"
 			testVersion = "1.2.42"
 			// The Restaurant at the End of the Universe
 			testCommitHash = "Milliways"
 		)
 
 		resetTest(t)
-		handler := versionhandler.NewHandler(testLogger, testVersion, testCommitHash)
+		handler := versionhandler.NewHandler(testLogger, testAppName, testVersion, testCommitHash)
 		testRequest := httptest.NewRequest("GET", "/wibble", nil)
 		testResponseRecorder := httptest.NewRecorder()
 
 		handler.ServeHTTP(testResponseRecorder, testRequest)
 		require.Equal(t, http.StatusOK, testResponseRecorder.Result().StatusCode)
+
+		// Yeah, it maybe should be interface but "any" is neater
+		var responseBodyJson = map[string]any{}
+		body := testResponseRecorder.Result().Body
+		defer body.Close()
+
+		jsonDecoder := json.NewDecoder(body)
+		err := jsonDecoder.Decode(&responseBodyJson)
+		require.NoError(t, err)
+
+		require.Equal(t, testAppName, responseBodyJson["app_name"])
+		require.Equal(t, testVersion, responseBodyJson["version"])
+		require.Equal(t, testCommitHash, responseBodyJson["commit"])
 	})
 
 	t.Run("response write fails", func(t *testing.T) {
 		resetTest(t)
-		handler := versionhandler.NewHandler(mockLogger, "", "")
+		handler := versionhandler.NewHandler(mockLogger, "", "", "")
 		testRequest := httptest.NewRequest("GET", "/wibble", nil)
 
 		testError := errors.New("test error")

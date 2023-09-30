@@ -7,12 +7,14 @@ FROM golang:1.20.4-bookworm as build
 ARG APP_NAME
 ARG TARGETARCH
 ARG TARGETOS
+ARG COMMIT_HASH
 
-# Need to convert the TARGETARCH to an environment variable so that the
+# Need to convert the TARGETARCH etc to environment variables so that the
 # Makefile can pick it up and use to build the executable
 ENV APP_NAME=${APP_NAME}
 ENV TARGETARCH=${TARGETARCH}
 ENV TARGETOS=${TARGETOS}
+ENV COMMIT_HASH=${COMMIT_HASH}
 
 WORKDIR /usr/src/app
 COPY ./cmd ./cmd/

@@ -38,7 +38,7 @@ func NewHandler(log logger, config config) *handler {
 }
 
 func (h *handler) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
-	h.log.Debugf("Version handler called")
+	h.log.Debugf("Tree handler called")
 	if request.Method != http.MethodGet {
 		h.log.Errorf("Tried to use method '%s'", request.Method)
 		responseWriter.WriteHeader(http.StatusBadRequest)

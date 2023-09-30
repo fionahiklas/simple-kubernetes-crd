@@ -20,13 +20,15 @@ type logger interface {
 
 type handler struct {
 	log        logger
+	appName    string
 	version    string
 	commitHash string
 }
 
-func NewHandler(log logger, version string, commitHash string) *handler {
+func NewHandler(log logger, appName string, version string, commitHash string) *handler {
 	return &handler{
 		log:        log,
+		appName:    appName,
 		version:    version,
 		commitHash: commitHash,
 	}
@@ -57,11 +59,13 @@ func (h *handler) marshalVersion() []byte {
 	type versionJson struct {
 		Version string `json:"version"`
 		Commit  string `json:"commit"`
+		AppName string `json:"app_name"`
 	}
 
 	toMarshal := versionJson{
 		Version: h.version,
 		Commit:  h.commitHash,
+		AppName: h.appName,
 	}
 
 	// I can't find a way that this can actually fail given the input

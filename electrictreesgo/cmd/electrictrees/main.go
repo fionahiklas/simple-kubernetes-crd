@@ -22,7 +22,7 @@ func main() {
 
 	log := logging.NewLogger(parsedConfig)
 
-	versionHandler := versionhandler.NewHandler(log, version.CodeVersion(), version.CommitHash())
+	versionHandler := versionhandler.NewHandler(log, version.AppName(), version.CodeVersion(), version.CommitHash())
 	treeHandler := treehandler.NewHandler(log, parsedConfig)
 
 	mux := http.NewServeMux()
