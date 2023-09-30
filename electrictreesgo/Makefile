@@ -109,6 +109,7 @@ build_for_local: ## Build image using local docker daemon
 
 build_for_minikube: ## Build the image using Minikubes docker daemon
 	eval $$(minikube docker-env) ; docker build --build-arg APP_NAME=${APP_NAME} --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${CODE_VERSION} .
+	eval $$(minikube docker-env) ; docker tag ${APP_NAME}:${CODE_VERSION} ${APP_NAME}:latest
 
 check_minikube_images: ## Get a list of images from the Minikube docker daemon
 	eval $$(minikube docker-env) ; docker images

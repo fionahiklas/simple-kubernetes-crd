@@ -19,6 +19,10 @@ package controllers
 
 import (
 	"context"
+	appsv1 "k8s.io/api/apps/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/types"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -40,17 +44,49 @@ type ElectricTreesReconciler struct {
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
-// TODO(user): Modify the Reconcile function to compare the state specified by
-// the ElectricTrees object against the actual cluster state, and then
-// perform operations to make the cluster state reflect the state specified by
-// the user.
 //
 // For more details, check Reconcile and its Result here:
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.14.1/pkg/reconcile
-func (etr *ElectricTreesReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
-	_ = log.FromContext(ctx)
+func (etr *ElectricTreesReconciler) Reconcile(ctx context.Context, ctrlRequest ctrl.Request) (ctrl.Result, error) {
+	log := log.FromContext(ctx).WithValues("ElectricTrees", ctrlRequest.NamespacedName)
 
-	// TODO(user): your logic here
+	// Fetch the Traveller instance
+	instance := &hiklascomv1alpha1.ElectricTrees{}
+	err := etr.Get(context.TODO(), ctrlRequest.NamespacedName, instance)
+
+	if err != nil {
+		if errors.IsNotFound(err) {
+			// Request object not found, could have been deleted after reconcile request.
+			// Owned objects are automatically garbage collected. Return and don't requeue
+			return reconcile.Result{}, nil
+		}
+
+		// Error reading the object - requeue the request.
+		return reconcile.Result{}, err
+	}
+
+	// Check if this Deployment already exists
+	found := &appsv1.Deployment{}
+	err = etr.Get(context.TODO(), types.NamespacedName{Name: instance.Name, Namespace: instance.Namespace}, found)
+
+	var result *reconcile.Result
+	result, err = etr.ensureDeployment(ctrlRequest, instance, etr.electricTreeDeployment(instance))
+
+	if result != nil {
+		log.Error(err, "Deployment Not ready")
+		return *result, err
+	}
+
+	// Check if this Service already exists
+	result, err = etr.ensureService(ctrlRequest, instance, etr.electricTreeService(instance))
+	if result != nil {
+		log.Error(err, "Service Not ready")
+		return *result, err
+	}
+
+	// Deployment and Service already exists - don't requeue
+	log.Info("Skip reconcile: Deployment and service already exists",
+		"Deployment.Namespace", found.Namespace, "Deployment.Name", found.Name)
 
 	return ctrl.Result{}, nil
 }
