@@ -73,8 +73,17 @@ test: ## Run unit tests and check coverage
 
 build: ## Build the application using native target or from inside Docker
 	@echo "Building local '${APP_NAME}' for '${TARGETARCH}' on '${TARGETOS}'"
-	CGO_ENABLED=0 go build ${GO_LD_FLAGS} -o ${BUILD_PATH}/${APP_NAME} ./cmd/${APP_NAME}
+	CGO_ENABLED=0 go build ${GO_LD_FLAGS} -o ${BUILD_PATH}/${APP_NAME}-${TARGETOS}-${TARGETARCH} ./cmd/${APP_NAME}
 
 run: ## Run the application that has been built locally
 	@echo "Running '${APP_NAME}' version '${CODE_VERSION}' locally on '${TARGETOS}/${TARGETARCH}'"
-	( . ./scripts/local-env.sh ; ./build/${APP_NAME} )
+	( . ./scripts/local-env.sh ; ./build/${APP_NAME}-${TARGETOS}-${TARGETARCH} )
+
+build_for_local: ## Build image using local docker daemon
+	docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} -t ${APP_NAME}:${VERSION} .
+
+build_for_minikube: ## Build the image using Minikubes docker daemon
+	eval $$(minikube docker-env) ; docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} -t ${APP_NAME}:${VERSION} .
+
+check_minikube_images: ## Get a list of images from the Minikube docker daemon
+	eval $$(minikube docker-env) ; docker images
