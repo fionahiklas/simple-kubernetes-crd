@@ -94,6 +94,11 @@ Creating the manifests
 make manifests
 ```
 
+### Coding
+
+Following the Redhat operator tutorial for guidance on commands and code to creating a 
+service and deployment
+
 
 
 
@@ -104,9 +109,8 @@ make manifests
 
 * [Homepage](https://sdk.operatorframework.io)
 * [Build operator in six steps](https://developers.redhat.com/articles/2021/09/07/build-kubernetes-operator-six-steps)
-
-
-
+* [Redhat Operator SDK tutorial](https://developers.redhat.com/articles/2021/09/07/build-kubernetes-operator-six-steps)
+* [Redhat Operator Tutorial code](https://github.com/deepak1725/hello-operator2)
 
 
 

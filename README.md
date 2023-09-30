@@ -31,7 +31,7 @@ my daughter loves the song [Together in Electric Dreams](https://en.wikipedia.or
 
 ### Kubernetes
 
-* [Operators intor video](https://www.youtube.com/watch?v=ha3LjlD6g7g)
+* [Operators intro video](https://www.youtube.com/watch?v=ha3LjlD6g7g)
 * [Operator hub](https://operatorhub.io)
 * [Operator SDK repo](https://github.com/operator-framework/operator-sdk)
 
