@@ -3,7 +3,7 @@
 # Also you need to use binutils-gold on alpine to even get the code to link but then
 # running the linter causes a segmentation fault.  Debian, on the other hand appears to
 # work fine :)
-FROM golang:1.20.4-bookworm as build
+FROM golang:1.20.8-bookworm as build
 ARG APP_NAME
 ARG TARGETARCH
 ARG TARGETOS

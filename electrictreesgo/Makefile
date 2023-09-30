@@ -88,11 +88,27 @@ run_local: build ## Run the application that has been built locally
 	@echo "Running '${APP_NAME}' version '${CODE_VERSION}' locally on '${TARGETOS}/${TARGETARCH}'"
 	( . ./scripts/local-env.sh ; ./build/${APP_NAME}-${TARGETOS}-${TARGETARCH} )
 
+run_local_docker: ## Run the application in a Docker container that has been built locally
+	@echo "Running Docker container for '${APP_NAME}' version '${CODE_VERSION}' locally on '${TARGETOS}/${TARGETARCH}'"
+	( . ./scripts/local-env.sh ; docker run -d -p 7777:7777 --name ${APP_NAME} \
+		--env LOG_LEVEL \
+		--env ENABLE_JSON_LOG_FORMAT \
+        --env TREE_NAME \
+		--env TREE_TRY \
+		--env TREE_DISTANCE \
+		--env TREE_EYES_CLOSED \
+		${APP_NAME}:${CODE_VERSION} )
+
+kill_local_docker: ## Kill the running container and delete it
+	@echo "Killing local docker container and removing it"
+	docker kill ${APP_NAME}
+	docker rm ${APP_NAME}
+
 build_for_local: ## Build image using local docker daemon
-	docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${VERSION} .
+	docker build --build-arg APP_NAME=${APP_NAME} --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${CODE_VERSION} .
 
 build_for_minikube: ## Build the image using Minikubes docker daemon
-	eval $$(minikube docker-env) ; docker build --build-arg APP_NAME=${APP_NAME}--build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${VERSION} .
+	eval $$(minikube docker-env) ; docker build --build-arg APP_NAME=${APP_NAME} --build-arg TARGETOS=${TARGETOS} --build-arg TARGETARCH=${TARGETARCH} --build-arg COMMIT_HASH=${COMMIT_HASH} -t ${APP_NAME}:${CODE_VERSION} .
 
 check_minikube_images: ## Get a list of images from the Minikube docker daemon
 	eval $$(minikube docker-env) ; docker images

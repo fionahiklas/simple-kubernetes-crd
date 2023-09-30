@@ -61,14 +61,14 @@ func (h *handler) ServeHTTP(responseWriter http.ResponseWriter, request *http.Re
 func (h *handler) marshalTree() []byte {
 	// Don't forget, fields must be exported to be
 	// marshalled (I forgot, hence this comment :) )
-	type versionJson struct {
-		TreeName   string `json:"tree_name,omitempty"`
-		Try        bool   `json:"try,omitempty"`
-		HowFarAway int    `json:"how_far,omitempty"`
-		EyesClosed bool   `json:"eyes_closed,omitempty"`
+	type treeJson struct {
+		TreeName   string `json:"tree_name"`
+		Try        bool   `json:"try"`
+		HowFarAway int    `json:"how_far"`
+		EyesClosed bool   `json:"eyes_closed"`
 	}
 
-	toMarshal := versionJson{
+	toMarshal := treeJson{
 		TreeName:   h.config.TreeName(),
 		Try:        h.config.Try(),
 		HowFarAway: h.config.HowFarAway(),

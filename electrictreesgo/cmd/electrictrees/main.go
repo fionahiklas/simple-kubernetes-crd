@@ -32,7 +32,11 @@ func main() {
 	log.Infof("Starting app version '%s', commit: '%s' on localhost:7777",
 		version.CodeVersion(), version.CommitHash())
 
-	if err := http.ListenAndServe("localhost:7777", mux); err != nil {
+	// Note: Don't bind to localhost here because that can't be seen if this
+	// app is running inside a container!  Localhost is a private network and
+	// port mappings aren't going to work (well not unless we're dealing with
+	// sidecar containers or other malarky)
+	if err := http.ListenAndServe("0.0.0.0:7777", mux); err != nil {
 		log.Error(context.Background(), "Error from HTTP server: %s", err.Error())
 	}
 }
