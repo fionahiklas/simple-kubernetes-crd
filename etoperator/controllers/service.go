@@ -53,7 +53,7 @@ func (etr *ElectricTreesReconciler) electricTreeService(tree *v1alpha1.ElectricT
 
 	service := &corev1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      tree.Name,
+			Name:      tree.Name + "-svc",
 			Namespace: tree.Namespace,
 		},
 		Spec: corev1.ServiceSpec{
@@ -61,8 +61,8 @@ func (etr *ElectricTreesReconciler) electricTreeService(tree *v1alpha1.ElectricT
 			Ports: []corev1.ServicePort{{
 				Protocol:   corev1.ProtocolTCP,
 				Port:       7777,
-				TargetPort: intstr.FromInt(7777),
-				NodePort:   37777,
+				TargetPort: intstr.FromString("tree-port"),
+				NodePort:   32707,
 			}},
 			Type: corev1.ServiceTypeNodePort,
 		},

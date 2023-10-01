@@ -15,6 +15,22 @@ my daughter loves the song [Together in Electric Dreams](https://en.wikipedia.or
 * [Install Minikube](./docs/install-minikube#install)
 * [Start Minikube](./docs/install-minikube#startup)
 * [Build Electric Trees for Minikube](./electrictreesgo/README#quickstart)
+* [Run the operator and apply sample CRD instance](./etoperator/README.md#quickstart)
+
+You should now be able to run the following command to allow connections to 
+the ElectricTrees service
+
+```
+minikube service --url=true electrictrees-mimi-svc
+```
+
+Running these commands to actually hit the endpoints
+
+``` 
+curl http://127.0.0.1:<service port>/tree  
+curl http://127.0.0.1:<service port>/version  
+```
+
 
 
 ## References

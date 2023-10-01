@@ -71,7 +71,6 @@ func (etr *ElectricTreesReconciler) Reconcile(ctx context.Context, ctrlRequest c
 
 	var result *reconcile.Result
 	result, err = etr.ensureDeployment(ctrlRequest, instance, etr.electricTreeDeployment(instance))
-
 	if result != nil {
 		log.Error(err, "Deployment Not ready")
 		return *result, err

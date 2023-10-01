@@ -10,6 +10,38 @@ this is what I did to get everything up and running.
 __TODO:__ Write some unit tests for the operator!  The SDK seems to make the 
 operator code eminently testable (defined input/output, injected client)
 
+## Quickstart
+
+* Run `cd etoperator` to get into this directory
+* Run `make install` to install the CRD manifest
+* Run `make deploy` NOTE: I don't think this step is actually needed
+* Run `make run` this starts the operator locally
+
+In a separate terminal run 
+
+``` 
+kustomize build config/samples | kubectl apply -f -
+```
+
+This will create the CRD instance and this should result in deployment and 
+service being created, run `kubectl get all` to check, e.g.
+
+``` 
+kubectl get all                                     
+NAME                                          READY   STATUS    RESTARTS   AGE
+pod/electrictrees-mimi-app-67c4d579c7-7h7z4   1/1     Running   0          13m
+
+NAME                             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/electrictrees-mimi-svc   NodePort    10.104.29.109   <none>        7777:32707/TCP   13m
+service/kubernetes               ClusterIP   10.96.0.1       <none>        443/TCP          11h
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/electrictrees-mimi-app   1/1     1            1           13m
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/electrictrees-mimi-app-67c4d579c7   1         1         1       13m
+```
+
 
 ## Environment
 

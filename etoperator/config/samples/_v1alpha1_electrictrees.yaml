@@ -3,10 +3,13 @@ kind: ElectricTrees
 metadata:
   labels:
     app.kubernetes.io/name: electrictrees
-    app.kubernetes.io/instance: electrictrees-sample
+    app.kubernetes.io/instance: electrictrees-mimi
     app.kubernetes.io/part-of: etoperator
     app.kubernetes.io/managed-by: kustomize
     app.kubernetes.io/created-by: etoperator
-  name: electrictrees-sample
+  name: electrictrees-mimi
 spec:
-  # TODO(user): Add fields here
+  eyes_closed: true
+  how_far_away: 32768
+  tree_name: TreeForMimi
+  try: true

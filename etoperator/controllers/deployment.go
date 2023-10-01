@@ -53,7 +53,7 @@ func (etr *ElectricTreesReconciler) electricTreeDeployment(tree *v1alpha1.Electr
 
 	deploymentObject := &appsv1.Deployment{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      tree.Name,
+			Name:      tree.Name + "-app",
 			Namespace: tree.Namespace,
 		},
 		Spec: appsv1.DeploymentSpec{
@@ -67,8 +67,10 @@ func (etr *ElectricTreesReconciler) electricTreeDeployment(tree *v1alpha1.Electr
 				},
 				Spec: corev1.PodSpec{
 					Containers: []corev1.Container{{
-						Image:           "electrictrees:latest",
-						ImagePullPolicy: corev1.PullAlways,
+						Image: "electrictrees:latest",
+						// We're pushing the image into the Minikube Docker so don't allow it
+						// to try and pull the image as it won't work!
+						ImagePullPolicy: corev1.PullNever,
 						Name:            "electric-trees-pod",
 						Env: []corev1.EnvVar{
 							{
@@ -94,7 +96,7 @@ func (etr *ElectricTreesReconciler) electricTreeDeployment(tree *v1alpha1.Electr
 						},
 						Ports: []corev1.ContainerPort{{
 							ContainerPort: 7777,
-							Name:          "treePort",
+							Name:          "tree-port",
 						}},
 					}},
 				},
