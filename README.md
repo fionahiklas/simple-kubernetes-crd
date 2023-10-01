@@ -11,10 +11,10 @@ my daughter loves the song [Together in Electric Dreams](https://en.wikipedia.or
 
 ## Quickstart
 
-* [Install Docker](./docs/install-docker#install)
-* [Install Minikube](./docs/install-minikube#install)
-* [Start Minikube](./docs/install-minikube#startup)
-* [Build Electric Trees for Minikube](./electrictreesgo/README#quickstart)
+* [Install Docker](./docs/install-docker.md#install)
+* [Install Minikube](./docs/install-minikube.md#install)
+* [Start Minikube](./docs/install-minikube.md#startup)
+* [Build Electric Trees for Minikube](./electrictreesgo/README.md#quickstart)
 * [Run the operator and apply sample CRD instance](./etoperator/README.md#quickstart)
 
 You should now be able to run the following command to allow connections to 
