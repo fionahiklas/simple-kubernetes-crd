@@ -27,7 +27,7 @@ This installed the `kubectx` and `kubens` commands
 
 ### Ubuntu
 
-#### Using Debian Packages
+Using Debian Packages
 
 This is slightly more involved and requires downloading of packages before
 installing them.
@@ -55,10 +55,7 @@ sudo dpkg -i ./kubectx_0.9.3-1_all.deb
 sudo dpkg -i ./minikube_latest_arm64.deb
 ```
 
-
-
 ## Running Minikube
-
 
 ### Startup
 
@@ -70,7 +67,6 @@ minikube start --driver=docker
 
 
 ### Configuration
-
 
 Enable the ingress addon
 
@@ -85,18 +81,15 @@ minikube addons enable ingress
 
 * [Download Page](https://minikube.sigs.k8s.io/docs/start/)
 
-
 ### Kubectx
 
 * [Kubectx repo](https://github.com/ahmetb/kubectx)
 * [Kubectx package page](https://packages.debian.org/bookworm/kubectx)
 * [Debian Package](http://ftp.uk.debian.org/debian/pool/main/k/kubectx/kubectx_0.9.3-1_all.deb)
 
-
 ### Ubuntu
 
 * [Unsandboxed error message](https://askubuntu.com/questions/908800/what-does-this-apt-error-message-download-is-performed-unsandboxed-as-root)
-
 
 ### Debian 
 

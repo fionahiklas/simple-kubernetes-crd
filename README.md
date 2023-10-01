@@ -11,20 +11,10 @@ my daughter loves the song [Together in Electric Dreams](https://en.wikipedia.or
 
 ## Quickstart
 
-* Install Docker
-* Install Minikube
-* Start Minikube
-
-
-
-
-## References
-
-### Kubernetes
-
-
-
-### Minikube
+* [Install Docker](./docs/install-docker#install)
+* [Install Minikube](./docs/install-minikube#install)
+* [Start Minikube](./docs/install-minikube#startup)
+* [Build Electric Trees for Minikube](./electrictreesgo/README#quickstart)
 
 
 ## References

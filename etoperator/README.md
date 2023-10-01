@@ -7,6 +7,9 @@ A simple operator with a CRD to create an "electric trees" resource.
 You don't have to carry out any of the steps in this documentation file,
 this is what I did to get everything up and running.
 
+__TODO:__ Write some unit tests for the operator!  The SDK seems to make the 
+operator code eminently testable (defined input/output, injected client)
+
 
 ## Environment
 
@@ -64,7 +67,7 @@ cd etoperator
 operator-sdk init --domain hiklas.com --owner "Fiona Bianchi" --repo github.com/fionahiklas/simple-kubernetes-crd/etoperator
 ```
 
-NOTE: If you have any backup files, for example `README.md~` the init command 
+__NOTE:__ If you have any backup files, for example `README.md~` the init command 
 will complain 
 
 ```
@@ -97,10 +100,7 @@ make manifests
 ### Coding
 
 Following the Redhat operator tutorial for guidance on commands and code to creating a 
-service and deployment
-
-
-
+service and deployment from the ElectricTrees Custom Resource Definition
 
 
 ## References

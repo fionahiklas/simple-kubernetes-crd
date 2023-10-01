@@ -10,6 +10,7 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
+	"strconv"
 )
 
 func (etr *ElectricTreesReconciler) ensureDeployment(request reconcile.Request,
@@ -69,6 +70,28 @@ func (etr *ElectricTreesReconciler) electricTreeDeployment(tree *v1alpha1.Electr
 						Image:           "electrictrees:latest",
 						ImagePullPolicy: corev1.PullAlways,
 						Name:            "electric-trees-pod",
+						Env: []corev1.EnvVar{
+							{
+								Name:  "LOG_LEVEL",
+								Value: "DEBUG",
+							},
+							{
+								Name:  "TREE_NAME",
+								Value: tree.Spec.TreeName,
+							},
+							{
+								Name:  "TREE_TRY",
+								Value: strconv.FormatBool(tree.Spec.Try),
+							},
+							{
+								Name:  "TREE_DISTANCE",
+								Value: strconv.FormatInt(int64(tree.Spec.HowFarAway), 10),
+							},
+							{
+								Name:  "TREE_EYES_CLOSED",
+								Value: strconv.FormatBool(tree.Spec.EyesClosed),
+							},
+						},
 						Ports: []corev1.ContainerPort{{
 							ContainerPort: 7777,
 							Name:          "treePort",
