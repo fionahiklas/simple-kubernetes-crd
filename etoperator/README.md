@@ -4,9 +4,6 @@
 
 A simple operator with a CRD to create an "electric trees" resource.
 
-You don't have to carry out any of the steps in this documentation file,
-this is what I did to get everything up and running.
-
 __TODO:__ Write some unit tests for the operator!  The SDK seems to make the 
 operator code eminently testable (defined input/output, injected client)
 
@@ -55,6 +52,9 @@ and homebrew for installing tools.  A few crucial points
 
 
 ## Setup
+
+These are the steps I used to create and setup this project, you don't need to 
+follow them to simply run/use the code.
 
 ### Install pre-requisites
 
